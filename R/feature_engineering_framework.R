@@ -143,7 +143,6 @@ label_count_encoding <- function(id, mode = "normal"){
 #' for the current row, so as to avoid leakage.
 #'
 #' @import magrittr, plyr, dplyr
-#' @export
 #'
 #' @param id vector of identifiers to group over
 #' @param resp vector of response to summarise
