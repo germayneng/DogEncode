@@ -1,11 +1,15 @@
 Package: DogEncode
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Easy categorical encoding for machine learning feature engineering 
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: person("Germayne", , "germayneng@hotmail.com", website = "germayneng.github.io")
+Description: Various method for categotical feature engineering before modelling. DogEncode is The 'tidyverse' is a set of packages that work in harmony
+    a essentially cat (categorical) encoding but just dog because i love them :) 
+Imports:
+    plyr,
+    dplyr,
+    caret
+    boxes
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
