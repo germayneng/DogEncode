@@ -144,6 +144,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' for the current row, so as to avoid leakage.
 #'
 #' @import data.table
+#' @export
 
 loo_encoding <- function(id, resp) {
   working_df <- data.table::data.table(id, resp)
