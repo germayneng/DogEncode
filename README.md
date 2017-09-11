@@ -1,4 +1,12 @@
-# DogEncode
+DogEncode
+================
+
+*DogEncode* provides some methods to encode categoical features fast and easy. From simple methodology like dummy variables to kaggle's leave one out encoding, this R package will cover them all.   
 
 
-![](https://s-media-cache-ak0.pinimg.com/originals/3a/e7/53/3ae753fb5ac87c3d7ad690c36e2ef6bd.jpg)
+## Installation
+
+```s
+# install.packages("devtools")
+devtools::install_github("germayneng/DogEncode")
+```
