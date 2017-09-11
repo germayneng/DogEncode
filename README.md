@@ -13,10 +13,14 @@ devtools::install_github("germayneng/DogEncode")
 ## Usage
 
 Currently, DogEncode covers the following encoding methods. I will be glad to add more as I learn more :) 
-1) 
+1) one hot encoding (dummy)
+2) label encoding 
+3) Count encoding 
+4) Label count encoding 
+5) Leave one out encoding
 
 ## Credit 
 
 Kaggle, HJ van Veen 
 
-## 
+## License 
