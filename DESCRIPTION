@@ -8,7 +8,7 @@ Description: Various method for categotical feature engineering before modelling
 Imports:
     plyr,
     dplyr,
-    caret
+    caret,
     boxes
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
