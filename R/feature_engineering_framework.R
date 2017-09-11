@@ -134,14 +134,14 @@ label_count_encoding <- function(id, mode = "normal"){
 #' https://github.com/DexGroves/hacktoolkit
 #' https://datascience.stackexchange.com/questions/11024/encoding-categorical-variables-using-likelihood-estimation
 #' 
-#' This is DexGrove's looencoding. I have a modified version with caps Looencoding. This version takes into account for possible NA values  
+#'
 #' 
 #'   
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import plyr, dplyr, magrittr
-
+#' @import data.table, 
+#' @export
 #'
 #' @param id vector of identifiers to group over
 #' @param resp vector of response to summarise
@@ -155,11 +155,8 @@ label_count_encoding <- function(id, mode = "normal"){
 #'
 #' loo_encode(test_data$id, test_data$resp)
 #' 
-
-
-Loo_encode <- function(id, resp) {
-  
-  working_df <- data.frame(id, resp)
+loo_encode3 <- function(id, resp) {
+  working_df <- data.table::data.table(id, resp)
   colnames(working_df) <- c("id","resp")
   
   # check if there is any NA in the resp columns, 
@@ -172,8 +169,11 @@ Loo_encode <- function(id, resp) {
   #return(working_df$encoded)
   
   #} else {
-  working_df <- working_df magrittr::%>% group_by(id) magrittr::%>% dplyr::mutate(encoded = loo_grouped_vector(resp)) magrittr::%>% dplyr::ungroup()
-  working_df$encoded[is.na(working_df$encoded)] <- NA 
+  #working_df <- working_df %>% group_by(id) %>% mutate(encoded = loo_grouped_vector(resp)) %>% ungroup()
+  working_df[, encoded := loo_grouped_vector(resp), by = id]
+  #working_df$encoded[is.na(working_df$encoded)] <- NA 
+  working_df[is.nan(encoded), encoded := NA]
+  
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
   nona_df <- working_df[which(!is.na(working_df$resp)),]
@@ -192,27 +192,42 @@ Loo_encode <- function(id, resp) {
   
 }
 
-#' Take the mean of a variable for all rows with the same id except
-#' for the current row, so as to avoid leakage.
-#'
-#' @import data.table
-#'
-#' @param id vector of identifiers to group over
-#' @param resp vector of response to summarise
-#' @return vector of one-left-out summarised response over id
-#'
-#' @examples
-#' test_data <- data.frame(
-#'   id = c(rep("a", 5), rep("b", 3), rep("c", 2), "d"),
-#'   resp = c(1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1)
-#' )
-#'
-#' loo_encode(test_data$id, test_data$resp)
-#' 
-
+loo_encode2 <- function(id, resp) {
+  working_df <- data.table::data.table(id, resp)
+  colnames(working_df) <- c("id","resp")
+  
+  # check if there is any NA in the resp columns, 
+  #resp_na_check <- length(which(is.na(resp)))
+  
+  
+  #if (!resp_na_check > 0 ) {
+  #working_df[, encoded := loo_grouped_vector(resp), by = id]
+  #working_df[is.nan(encoded), encoded := NA]
+  #return(working_df$encoded)
+  
+  #} else {
+  working_df[, encoded := loo_grouped_vector(resp), by = id]
+  working_df[is.nan(encoded), encoded := NA]
+  working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
+  # we want to extract the resp that is no NA 
+  nona_df <- working_df[which(!is.na(working_df$resp)),]
+  mean_without_na <- nona_df %>% group_by(id) %>% 
+    summarise(
+      encoded = mean(resp)
+    )
+  na_df <- working_df[which(is.na(working_df$resp)),]
+  na_df$encoded <- NULL # since encode is the wrong one 
+  na_df <- na_df %>% left_join(mean_without_na, by ="id") 
+  # join them back 
+  result <- rbind(nona_df,na_df) %>% arrange(row) # ensure the order is the ssame 
+  result$encoded[is.na(result$encoded)] <- mean(resp, na.rm = T)
+  return(result$encoded)
+  #}
+  
+}
 
 loo_encode <- function(id, resp) {
-  working_df <- data.table::data.table(id, resp)
+  working_df <- data.table(id, resp)
   working_df[, encoded := loo_grouped_vector(resp), by = id]
   working_df[is.nan(encoded), encoded := NA]
   working_df$encoded
