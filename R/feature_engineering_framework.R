@@ -140,8 +140,8 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import plyr, dplyr
-#' @importFrom magrittr %>%
+#' @import plyr, dplyr, magrittr
+
 #'
 #' @param id vector of identifiers to group over
 #' @param resp vector of response to summarise
@@ -172,7 +172,7 @@ Loo_encode <- function(id, resp) {
   #return(working_df$encoded)
   
   #} else {
-  working_df <- working_df %>% group_by(id) %>% mutate(encoded = loo_grouped_vector(resp)) %>% ungroup()
+  working_df <- working_df magrittr::%>% group_by(id) magrittr::%>% dplyr::mutate(encoded = loo_grouped_vector(resp)) magrittr::%>% dplyr::ungroup()
   working_df$encoded[is.na(working_df$encoded)] <- NA 
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
@@ -195,7 +195,7 @@ Loo_encode <- function(id, resp) {
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @importFrom data.table data.table
+#' @import data.table
 #'
 #' @param id vector of identifiers to group over
 #' @param resp vector of response to summarise
@@ -212,7 +212,7 @@ Loo_encode <- function(id, resp) {
 
 
 loo_encode <- function(id, resp) {
-  working_df <- data.table(id, resp)
+  working_df <- data.table::data.table(id, resp)
   working_df[, encoded := loo_grouped_vector(resp), by = id]
   working_df[is.nan(encoded), encoded := NA]
   working_df$encoded
