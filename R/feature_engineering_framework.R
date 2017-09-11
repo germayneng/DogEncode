@@ -143,7 +143,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import data.table, 
+#' @import data.table
 
 loo_encoding <- function(id, resp) {
   working_df <- data.table::data.table(id, resp)
@@ -159,8 +159,8 @@ loo_encoding <- function(id, resp) {
   #return(working_df$encoded)
   
   #} else {
-  working_df[, encoded := loo_compute_group_by(resp), by = id]
-  working_df[is.nan(encoded), encoded := NA]
+  working_df <- working_df %>% group_by(id) %>% mutate(encoded = loo_compute(resp)) %>% ungroup()
+  working_df$encoded[is.nan(working_df$encoded),] <- NA
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
   nona_df <- working_df[which(!is.na(working_df$resp)),]
@@ -179,7 +179,7 @@ loo_encoding <- function(id, resp) {
   
 }
 
-loo_compute_group_by <- function(resp) {
+loo_compute <- function(resp) {
   resp <- resp[complete.cases(resp)]
   total <- sum(resp)
   divisor <- length(resp) - 1
