@@ -142,7 +142,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import data.table, 
+#' @import data.table
 #' @export
 #'
 #' @param id vector of identifiers to group over
@@ -160,7 +160,8 @@ label_count_encoding <- function(id, mode = "normal"){
 
 
 Loo_encode <- function(id, resp) {
-  working_df <- data.table::data.table(id, resp)
+  
+  working_df <- data.table(id, resp)
   colnames(working_df) <- c("id","resp")
   
   # check if there is any NA in the resp columns, 
