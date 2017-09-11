@@ -35,7 +35,8 @@
 #' df consist of the variables you want to dummified. make sure it is in data.frame 
 #' @description auto mode will help to remove one column. manual returns n columns with
 #' n variables. You can then choose who is the control. 
-#' 
+#'
+#' @importFrom caret dummyVars
 one_hot_encoding <- function(features = features, mode = "auto") {
   
   features_names <- colnames(features)
