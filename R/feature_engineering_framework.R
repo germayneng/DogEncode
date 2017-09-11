@@ -27,7 +27,7 @@ one_hot_encoding <- function(features = features, mode = "auto") {
   
   if (mode %in% "auto") {
   dmy <- caret::dummyVars("~.", data = features, fullRank = T)
-  } else if (mode %in % "manual") {
+  } else if (mode %in% "manual") {
     dmy <- caret::dummyVars("~.", data = features)
   } else {
     print("make sure mode is 'manual' or 'auto'")
