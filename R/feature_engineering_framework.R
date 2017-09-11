@@ -133,20 +133,33 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Do Owen Zhang style leave-one-out encoding of a categorical.
 #' aka likelihood encoding 
 
-#' Inspired by: 
 #' https://github.com/DexGroves/hacktoolkit
 #' https://datascience.stackexchange.com/questions/11024/encoding-categorical-variables-using-likelihood-estimation
 #' 
-#'
+#' This is DexGrove's looencoding. I have a modified version with caps Looencoding. This version takes into account for possible NA values  
 #' 
 #'   
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import data.table
+#' @import data.table, 
 #' @export
+#'
+#' @param id vector of identifiers to group over
+#' @param resp vector of response to summarise
+#' @return vector of one-left-out summarised response over id
+#'
+#' @examples
+#' test_data <- data.frame(
+#'   id = c(rep("a", 5), rep("b", 3), rep("c", 2), "d"),
+#'   resp = c(1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1)
+#' )
+#'
+#' loo_encode(test_data$id, test_data$resp)
+#' 
 
-loo_encoding <- function(id, resp) {
+
+Loo_encode <- function(id, resp) {
   working_df <- data.table::data.table(id, resp)
   colnames(working_df) <- c("id","resp")
   
@@ -180,6 +193,15 @@ loo_encoding <- function(id, resp) {
   
 }
 
+loo_encode <- function(id, resp) {
+  working_df <- data.table(id, resp)
+  working_df[, encoded := loo_grouped_vector(resp), by = id]
+  working_df[is.nan(encoded), encoded := NA]
+  working_df$encoded
+  
+}
+
+
 loo_grouped_vector <- function(resp) {
   resp <- resp[complete.cases(resp)]
   total <- sum(resp)
@@ -187,3 +209,6 @@ loo_grouped_vector <- function(resp) {
   sapply(resp, function(x) (total - x)/divisor)
 }
 
+
+
+  
