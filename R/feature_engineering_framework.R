@@ -1,6 +1,6 @@
 #'
 #'
-#' @import plyr, dplyr
+#' @import plyr, dplyr, data.table
 
 ###########################
 # One hot Encoding #######
