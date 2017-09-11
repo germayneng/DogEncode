@@ -142,7 +142,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import data.table, plyr, dplyr
+#' @import magrittr, plyr, dplyr
 #' @export
 #'
 #' @param id vector of identifiers to group over
