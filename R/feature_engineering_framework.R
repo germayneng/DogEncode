@@ -161,7 +161,7 @@ label_count_encoding <- function(id, mode = "normal"){
 
 Loo_encode <- function(id, resp) {
   
-  working_df <- data.table(id, resp)
+  working_df <- data.frame(id, resp)
   colnames(working_df) <- c("id","resp")
   
   # check if there is any NA in the resp columns, 
@@ -175,9 +175,7 @@ Loo_encode <- function(id, resp) {
   
   #} else {
   working_df <- working_df %>% group_by(id) %>% mutate(encoded = loo_grouped_vector(resp)) %>% ungroup()
-  #working_df[, encoded := loo_grouped_vector(resp), by = id]
   working_df$encoded[is.na(working_df$encoded)] <- NA 
-  #working_df[is.nan(encoded), encoded := NA]
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
   nona_df <- working_df[which(!is.na(working_df$resp)),]
