@@ -1,26 +1,5 @@
-##########################################
-# feature engineering framework  ######## 
-#########################################
-
-#' Framework to encode categorical features 
-#' A compiled list based on HJ van Veen's slide, raddar, and things you will see in kaggle
-#' 
-#' Objective is to have a one stop framework to deal with categorical variables easy 
-
-
-
-
-
-#' Table of contents: 
-#' ----------------- 
-#' 1) one hot encoding (dummy)
-#' 2) Hash encoding (tbd)
-#' 3) label encoding 
-#' 4) Count encoding 
-#' 5) Label count encoding 
-#' 6) Leave one out encoding
-#' 
-#' 
+#'
+#'
 #' @import plyr, dplyr
 
 ###########################
@@ -154,6 +133,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Do Owen Zhang style leave-one-out encoding of a categorical.
 #' aka likelihood encoding 
 
+#' Inspired by: 
 #' https://github.com/DexGroves/hacktoolkit
 #' https://datascience.stackexchange.com/questions/11024/encoding-categorical-variables-using-likelihood-estimation
 #' 
@@ -164,23 +144,8 @@ label_count_encoding <- function(id, mode = "normal"){
 #' for the current row, so as to avoid leakage.
 #'
 #' @import data.table, 
-#' @export
-#'
-#' @param id vector of identifiers to group over
-#' @param resp vector of response to summarise
-#' @return vector of one-left-out summarised response over id
-#'
-#' @examples
-#' test_data <- data.frame(
-#'   id = c(rep("a", 5), rep("b", 3), rep("c", 2), "d"),
-#'   resp = c(1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1)
-#' )
-#'
-#' loo_encode(test_data$id, test_data$resp)
-#' 
 
-
-loo_encode2 <- function(id, resp) {
+loo_encoding <- function(id, resp) {
   working_df <- data.table::data.table(id, resp)
   colnames(working_df) <- c("id","resp")
   
@@ -194,7 +159,7 @@ loo_encode2 <- function(id, resp) {
   #return(working_df$encoded)
   
   #} else {
-  working_df[, encoded := loo_grouped_vector(resp), by = id]
+  working_df[, encoded := loo_compute_group_by(resp), by = id]
   working_df[is.nan(encoded), encoded := NA]
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
@@ -214,16 +179,7 @@ loo_encode2 <- function(id, resp) {
   
 }
 
-loo_encode <- function(id, resp) {
-  working_df <- data.table(id, resp)
-  working_df[, encoded := loo_grouped_vector(resp), by = id]
-  working_df[is.nan(encoded), encoded := NA]
-  working_df$encoded
-  
-}
-
-
-loo_grouped_vector <- function(resp) {
+loo_compute_group_by <- function(resp) {
   resp <- resp[complete.cases(resp)]
   total <- sum(resp)
   divisor <- length(resp) - 1
