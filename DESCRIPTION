@@ -8,6 +8,7 @@ Description: Various method for categotical feature engineering before modelling
 Imports:
     plyr,
     dplyr,
+    data.table,
     caret
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
