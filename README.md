@@ -10,3 +10,13 @@ DogEncode
 # install.packages("devtools")
 devtools::install_github("germayneng/DogEncode")
 ```
+## Usage
+
+Currently, DogEncode covers the following encoding methods. I will be glad to add more as I learn more :) 
+1) 
+
+## Credit 
+
+Kaggle, HJ van Veen 
+
+## 
