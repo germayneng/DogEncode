@@ -142,7 +142,7 @@ label_count_encoding <- function(id, mode = "normal"){
 #' Take the mean of a variable for all rows with the same id except
 #' for the current row, so as to avoid leakage.
 #'
-#' @import data.table
+#' @import data.table, plyr, dplyr
 #' @export
 #'
 #' @param id vector of identifiers to group over
@@ -174,8 +174,10 @@ Loo_encode <- function(id, resp) {
   #return(working_df$encoded)
   
   #} else {
-  working_df[, encoded := loo_grouped_vector(resp), by = id]
-  working_df[is.nan(encoded), encoded := NA]
+  working_df <- working_df %>% group_by(id) %>% mutate(encoded = loo_grouped_vector(resp)) %>% ungroup()
+  #working_df[, encoded := loo_grouped_vector(resp), by = id]
+  working_df$encoded[is.na(working_df$encoded)] <- NA 
+  #working_df[is.nan(encoded), encoded := NA]
   working_df <- working_df %>% mutate(row = row_number()) # add to maintain order later
   # we want to extract the resp that is no NA 
   nona_df <- working_df[which(!is.na(working_df$resp)),]
