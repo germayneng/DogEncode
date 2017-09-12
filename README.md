@@ -25,6 +25,6 @@ Add more documentation to explain every function and credit to respective people
 
 ## Credit 
 
-Owen Zhang, Kaggle, HJ van Veen, Dex Grooves 
+Owen Zhang HJ van Veen, Dex Grooves 
 
 ## License 
