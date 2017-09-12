@@ -1,0 +1,24 @@
+#' @title label count encoding
+#' 
+#' @examples 
+#' 
+#' \dontrun{
+#' 
+#' 
+#' }
+#' @import dplyr
+#' @importFrom  data.table data.table
+#' @export 
+
+
+label_count_encoding <- function(id, mode = "normal"){
+  
+  working_df <- data.table::data.table(name = id)
+  summary_count <- table(id) %>% data.frame()
+  colnames(summary_count) <- c("name","count")
+  working_df <- working_df %>% left_join(summary_count, by = "name")
+  working_df <- working_df %>% arrange(desc(count)) %>% group_by(name) %>%
+    mutate(value = as.numeric(name)) %>% ungroup() %>% 
+    group_by(name) %>% mutate(encoded = (n_distinct(working_df$name) +1) - value)
+  
+}
