@@ -4,7 +4,7 @@
 \alias{label_count_encoding}
 \title{label count encoding}
 \usage{
-label_count_encoding(id, mode = "normal")
+label_count_encoding(id)
 }
 \examples{
 
