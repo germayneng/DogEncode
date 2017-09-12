@@ -1,4 +1,27 @@
+##########################################
+# feature engineering framework  ######## 
+#########################################
 
+#' Framework to encode categorical features 
+#' A compiled list based on HJ van Veen's slide, raddar, and things you will see in kaggle
+#' 
+#' Objective is to have a one stop framework to deal with categorical variables easy 
+
+
+
+
+
+#' Table of contents: 
+#' ----------------- 
+#' 1) one hot encoding (dummy)
+#' 2) Hash encoding (tbd)
+#' 3) label encoding 
+#' 4) Count encoding 
+#' 5) Label count encoding 
+#' 6) Leave one out encoding
+#' 
+#' 
+#' @import plyr, dplyr
 
 ###########################
 # One hot Encoding #######
@@ -12,7 +35,6 @@
 #' df consist of the variables you want to dummified. make sure it is in data.frame 
 #' @description auto mode will help to remove one column. manual returns n columns with
 #' n variables. You can then choose who is the control. 
-#'
 #' 
 one_hot_encoding <- function(features = features, mode = "auto") {
   
@@ -27,7 +49,7 @@ one_hot_encoding <- function(features = features, mode = "auto") {
   
   if (mode %in% "auto") {
   dmy <- caret::dummyVars("~.", data = features, fullRank = T)
-  } else if (mode %in% "manual") {
+  } else if (mode %in % "manual") {
     dmy <- caret::dummyVars("~.", data = features)
   } else {
     print("make sure mode is 'manual' or 'auto'")
