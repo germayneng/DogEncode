@@ -19,8 +19,12 @@ Currently, DogEncode covers the following encoding methods. I will be glad to ad
 4) Label count encoding 
 5) Leave one out encoding
 
+## To do
+
+Add more documentation to explain every function and credit to respective people.  
+
 ## Credit 
 
-Owen Zhang, Kaggle, HJ van Veen  
+Owen Zhang, Kaggle, HJ van Veen, Dex Grooves 
 
 ## License 
