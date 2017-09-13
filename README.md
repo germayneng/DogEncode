@@ -26,5 +26,7 @@ Add more documentation to explain every function and credit to respective people
 ## Credit 
 
 Owen Zhang, HJ van Veen, Dex Grooves and [Simone Aiosa's dog logo](https://dribbble.com/shots/2673237-Dog)
+<br>
+[super helpful post to help debug ^.^](http://alyssafrazee.com/2014/01/21/namespaces.html)
 
 ## License 
