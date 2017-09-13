@@ -21,7 +21,8 @@ Currently, DogEncode covers the following encoding methods. I will be glad to ad
 
 ## To do
 
-Add more documentation to explain every function and credit to respective people.  
+* Add more documentation to explain every function and credit to respective people.  
+* Hash encoding
 
 ## Credit 
 
