@@ -10,7 +10,7 @@
 #' @importFrom caret dummyVars
 #' @export 
 
-one_hot_encoding <- function(features = features, mode = "auto") {
+one_hot_encoding <- function(features = features, mode = 1) {
   
   features_names <- colnames(features)
   
@@ -21,12 +21,12 @@ one_hot_encoding <- function(features = features, mode = "auto") {
     }
   }
   
-  if (mode == "auto") {
+  if (mode == 1) {
     dmy <- caret::dummyVars("~.", data = features, fullRank = T)
-  } else if (mode == "manual") {
+  } else if (mode == 2) {
     dmy <- caret::dummyVars("~.", data = features)
   } else {
-    print("make sure mode is 'manual' or 'auto'")
+    print("make sure mode is 2:'manual' or 1:'auto' (default)")
     break
   }
   dummy_df <- data.frame(predict(dmy, newdata = features))
