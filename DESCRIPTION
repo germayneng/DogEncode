@@ -1,7 +1,7 @@
 Package: DogEncode
 Type: Package
 Title: Easy categorical encoding for machine learning feature engineering 
-Version: 0.1.3
+Version: 0.1.0
 Author: person("Germayne", , "germayneng@hotmail.com", website = "germayneng.github.io")
 Description: Various method for categotical feature engineering before modelling. DogEncode is 
     essentially named because cat (categorical) encoding but just dog because i love them :) 
