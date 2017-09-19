@@ -7,7 +7,7 @@
 #' 
 #' }
 #' 
-#' @importFrom caret dummyVars contr.ltfr
+#' @import caret
 #' @export 
 
 one_hot_encoding <- function(features = features, mode = "auto") {
