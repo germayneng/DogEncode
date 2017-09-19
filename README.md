@@ -14,6 +14,14 @@ devtools::install_github("germayneng/DogEncode")
 
 Currently, DogEncode covers the following encoding methods. I will be glad to add more as I learn more :) 
 1) one hot encoding (dummy)
+
+```
+# feed in dataframe wtih cat variables. class of variables to be character 
+# mode = auto to automate dropping off one dummy 
+# mode = manual to generate all dummy 
+one_hot_encoding(df, mode = "manual") 
+```
+
 2) label encoding aka colhot encoding 
 3) Count encoding aka counthot encoding 
 4) Label count encoding 
