@@ -75,7 +75,7 @@ example <- data.frame(
    id = c(rep("a", 5), rep("b", 3), rep("c", 2), "d"),
    resp = c(1, 0, 0, NA, 0, 1, 0, 0, 1, 0, 1))
    
- LOO_encoding(example$id, example$resp) 
+ LOO_encode(example$id, example$resp) 
 
 ```
 
