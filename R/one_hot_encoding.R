@@ -17,7 +17,7 @@ one_hot_encoding <- function(features = features, mode = "auto") {
   for (f in features_names) {
     if (class(features[[f]])=="character") {
       levels <- unique(c(features[[f]]))
-      features[[f]] <- as.factor(features[[f]], levels=levels)
+      features[[f]] <- factor(features[[f]], levels=levels)
     }
   }
   
